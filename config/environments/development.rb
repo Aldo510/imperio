@@ -43,6 +43,10 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  # host
+
+   config.hosts << "imperio-production.up.railway.app"
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
