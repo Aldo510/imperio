@@ -1,0 +1,21 @@
+<div class="w-full max-w-[1440px] mx-auto mt-10">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <% content_for :title, "Jugadores" %>
+
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl text-stone-900 dark:text-white">Jugadores</h1>
+    <%= link_to "New player", new_player_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <div id="players" class="min-w-full">
+    <% @players.each do |player| %>
+      <%= render player %>
+      <p>
+        <%= link_to "Show this player", player, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+      </p>
+    <% end %>
+  </div>
+</div>

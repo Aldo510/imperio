@@ -1,0 +1,18 @@
+<div id="<%= dom_id team %>">
+  <p class="my-5 text-stone-900 dark:text-white">
+    <strong class="block font-medium mb-1">Nombre:</strong>
+    <%= team.name %>
+  </p>
+
+  <%= link_to "Agregar jugador", new_player_path(category_id: team.category_id), class: "rounded-lg text-stone-900 py-3 px-5 bg-gray-100 hover:bg-rose-500 hover:text-white" %>
+
+  <p class="my-5 text-stone-900 dark:text-white">
+    <strong class="block font-medium mb-1">Logo:</strong>
+    <%= image_tag team.logo, class: "max-w-[400px]" if team.logo.attached? %>
+  </p>
+
+  <p class="my-5 text-stone-900 dark:text-white">
+    <strong class="block font-medium mb-1">Categoría:</strong>
+    <%= link_to Category.find(team.category_id).name, category_path(team.category_id), class: "hover:underline" %>
+  </p>
+</div>

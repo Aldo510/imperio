@@ -1,0 +1,29 @@
+<div class="mx-auto md:w-2/3 w-full flex max-w-[1440px]">
+  <div class="mx-auto">
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <% end %>
+    <h1 class="text-stone-900 dark:text-white text-center text-2xl my-5">Categoría</h1>
+    <%= link_to "Agregar Equipo", new_team_path, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <div class="text-stone-900 dark:text-white my-5">
+      Nombre: <%= @category.name %>
+    </div>
+    <% if @teams.present? %>
+    <div>
+      <p class="text-stone-900 dark:text-white text-xl">Equipos en esta categoría</p>
+      <% @teams.each do |team| %>
+        <%= link_to team.name, team, class: "text-stone-900 dark:text-white hover:underline" %>
+      <% end %>
+    </div>
+    <% else %>
+      <p class="text-stone-900 dark:text-white">Esta liga no tiene equipos aún</p>
+    <% end %>
+    
+
+    <%= link_to "Editar categoría", edit_category_path(@category), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Volver a categorías", categories_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <div class="inline-block ml-2">
+      <%= button_to "Borrar esta categoría", @category, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+    </div>
+  </div>
+</div>

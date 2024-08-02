@@ -1,0 +1,33 @@
+<div class="w-full max-w-[1440px] mx-auto mt-10">
+  <% if notice.present? %>
+  <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <% content_for :title, "Categorías" %>
+
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl text-stone-900 dark:text-white">Categorías</h1>
+    <%= link_to "New category", new_category_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <% if @categories.present? %>
+  <div id="categories" class="min-w-full mt-5">
+    <table class="border-collapse border border-slate-500 min-w-full">
+      <thead>
+        <tr>
+          <th class="text-stone-900 dark:text-white border border-slate-600">#</th>
+          <th class="text-stone-900 dark:text-white border border-slate-600">Nombre</th>
+          <th class="text-stone-900 dark:text-white border border-slate-600">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @categories.each do |category| %>
+        <%= render category %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <% else %>
+  <h3 class="text-stone-900 dark:text-white mt-10 text-center">Aún no se han agregado categorías</h3>
+  <% end %>
+</div>
