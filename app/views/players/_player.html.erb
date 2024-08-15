@@ -1,17 +1,17 @@
 <div id="<%= dom_id player %>">
   <p class="my-5 text-stone-900 dark:text-white">
     <strong class="block font-medium mb-1">Nombre:</strong>
-    <%= player.name %>
+    <%= player&.name %>
   </p>
 
   <p class="my-5 text-stone-900 dark:text-white">
     <strong class="block font-medium mb-1">Apellido(s):</strong>
-    <%= player.last_name %>
+    <%= player&.last_name %>
   </p>
 
   <p class="my-5 text-stone-900 dark:text-white">
     <strong class="block font-medium mb-1">Fecha de nacimiento:</strong>
-    <%= player.birthday.strftime("%m/%d/%Y") %>
+    <%= player.birthday&.strftime("%m/%d/%Y") %>
   </p>
   <% if player.photo.attached? %>
   <p class="my-5 text-stone-900 dark:text-white">
@@ -22,12 +22,12 @@
 
   <p class="my-5 text-stone-900 dark:text-white">
     <strong class="block font-medium mb-1">Curp:</strong>
-    <%= player.curp %>
+    <%= player&.curp %>
   </p>
 
   <p class="my-5 text-stone-900 dark:text-white">
     <strong class="block font-medium mb-1">Equipo:</strong>
-    <%= link_to Team.find(player.team_id).name.to_s, Team.find(player.team_id), class: "hover:underline" %>
+    <%= link_to Team.find(player&.team_id).name.to_s, Team.find(player.team_id), class: "hover:underline" %>
   </p>
 
 </div>

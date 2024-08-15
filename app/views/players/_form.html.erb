@@ -13,12 +13,12 @@
 
   <div class="my-5">
     <%= form.label :name, "Nombre", class: "text-stone-900 dark:text-white" %>
-    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", required: true %>
   </div>
 
   <div class="my-5">
     <%= form.label :last_name, "Apellidos", class: "text-stone-900 dark:text-white" %>
-    <%= form.text_field :last_name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.text_field :last_name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", required: true %>
   </div>
 
   <div class="my-5">
@@ -28,12 +28,12 @@
 
   <div class="my-5">
     <%= form.label :birthday, "Fecha de nacimiento", class: "text-stone-900 dark:text-white" %>
-    <%= form.date_field :birthday, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.date_field :birthday, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", required: true %>
   </div>
 
   <div class="my-5">
     <%= form.label :curp, class: "text-stone-900 dark:text-white" %>
-    <%= form.text_field :curp, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.text_field :curp, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", required: true %>
   </div>
 
   <div class="my-5">
