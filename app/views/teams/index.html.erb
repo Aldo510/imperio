@@ -1,25 +1,58 @@
 <div class="w-full max-w-[1440px] mx-auto mt-10">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
 
   <% content_for :title, "Equipos" %>
 
   <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl text-stone-900 dark:text-white">Equipos</h1>
-    <%= link_to "Nuevo equipo", new_team_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    <h1 class="font-bold text-4xl text-stone-900 dark:text-white">Lista de Equipos</h1>
+    <%= link_to "Nuevo equipo", new_team_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium hover:bg-blue-900" %>
   </div>
 
   <% if @teams.present? %>
-  <div id="teams" class="min-w-full">
-    <% @teams.each do |team| %>
-      <%= render team %>
-      <p>
-        <%= link_to "Show this team", team, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      </p>
-    <% end %>
+  <div id="teams" class="min-w-full mt-5">
+    <div class="container mx-auto px-4">
+
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead>
+          <tr>
+            <th class="px-6 py-3 bg-gray-50 dark: bg-gray-700 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Nombre
+            </th>
+            <th class="px-6 py-3 bg-gray-50 dark: bg-gray-700 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Logo
+            </th>
+            <th class="px-6 py-3 bg-gray-50 dark: bg-gray-700 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              # de jugadores
+            </th>
+            <th class="px-6 py-3 bg-gray-50 dark: bg-gray-700 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Categoría
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @teams.each do |team| %>
+          <tr class="bg-white dark:bg-gray-700">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <%= link_to team.name, team, class: " p-3 bg-gray-50 dark:bg-blue-500 dark:text-white text-black rounded-lg hover:bg-blue-800" %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap dark:text-white text-black">
+              <%= image_tag team.logo, class: "max-w-[200px]" %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap dark:text-white text-black">
+              <%= team.players.size %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <%= link_to Category.find(team.category_id).name, category_path(team.category_id), class: "hover:underline bg-gray-50 dark:bg-blue-500 p-3 rounded-lg dark:text-white text-black hover:bg-blue-800 bg:text-decoration-none" %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
   <% else %>
-    <p class="text 2xl text-center text-stone-900 dark:text-white my-5">Aún no se han agregado equipos</p>
+  <p class="text 2xl text-center text-stone-900 dark:text-white my-5">Aún no se han agregado equipos</p>
   <% end %>
 </div>
