@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root 'static_pages#index'
   resources :players
   resources :teams
   resources :categories
   devise_for :users
-  root 'static_pages#index'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get 'show_pdf', to: 'players#show_pdf', defaults: { format: :pdf }
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

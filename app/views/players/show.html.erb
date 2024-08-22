@@ -1,17 +1,28 @@
-<div class="mx-auto md:w-2/3 w-full flex mt-10">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-
-    <h1 class="text-stone-900 dark:text-white text-4xl text-center">Perfil de jugador</h1>
-
-    <%= render @player %>
-
-    <%= link_to "Editar jugador", edit_player_path(id: @player.id, category_id: Team.find(@player.team_id).category_id), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Volver a jugadores", players_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Borrar jugador", @player, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+<div class="container mx-auto px-4 md:px-8 py-10">
+  <!-- Mensaje de Notificación -->
+  <% if notice.present? %>
+    <div class="bg-green-50 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded-lg">
+      <p class="font-medium"><%= notice %></p>
     </div>
+  <% end %>
+
+  <!-- Título de la Página -->
+  <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white text-center mb-8">Perfil de Jugador</h1>
+
+  <!-- Contenido Principal -->
+  <div class="bg-stone-700 shadow-md rounded-lg p-6 mb-8">
+    <%= render @player %>
+    <%= link_to "Descargar Registro PDF", show_pdf_path(id: @player.id, format: :pdf), class: "bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 ease-in-out", target: "_blank" %>
+  </div>
+
+  <!-- Botones de Acción -->
+  <div class="flex flex-wrap justify-center gap-4">
+
+    <%= link_to "Editar Jugador", edit_player_path(id: @player.id, category_id: Team.find(@player.team_id).category_id), class: "bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 ease-in-out" %>
+
+    <%= link_to "Volver a Jugadores", players_path, class: "bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 ease-in-out" %>
+
+    <%= button_to "Borrar Jugador", @player, method: :delete, class: "bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 ease-in-out" %>
   </div>
 </div>
+

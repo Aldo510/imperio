@@ -1,33 +1,47 @@
-<div id="<%= dom_id player %>">
-  <p class="my-5 text-stone-900 dark:text-white">
-    <strong class="block font-medium mb-1">Nombre:</strong>
-    <%= player&.name %>
-  </p>
+<div id="<%= dom_id player %>" class="shadow-md rounded-lg p-6 mb-8">
+  <!-- Información del Jugador -->
+  <div class="space-y-6">
+    <!-- Nombre -->
+    <div class="flex items-center space-x-4">
+      <strong class="text-lg font-semibold text-gray-800 dark:text-gray-200">Nombre:</strong>
+      <p class="text-gray-700 dark:text-gray-400"><%= player&.name %></p>
+    </div>
 
-  <p class="my-5 text-stone-900 dark:text-white">
-    <strong class="block font-medium mb-1">Apellido(s):</strong>
-    <%= player&.last_name %>
-  </p>
+    <!-- Apellido(s) -->
+    <div class="flex items-center space-x-4">
+      <strong class="text-lg font-semibold text-gray-800 dark:text-gray-200">Apellido(s):</strong>
+      <p class="text-gray-700 dark:text-gray-400"><%= player&.last_name %></p>
+    </div>
 
-  <p class="my-5 text-stone-900 dark:text-white">
-    <strong class="block font-medium mb-1">Fecha de nacimiento:</strong>
-    <%= player.birthday&.strftime("%m/%d/%Y") %>
-  </p>
-  <% if player.photo.attached? %>
-  <p class="my-5 text-stone-900 dark:text-white">
-    <strong class="block font-medium mb-1">Foto:</strong>
-    <%= image_tag player.photo, class: "max-w-[400px]"  %>
-  </p>
-  <% end %>
+    <!-- Fecha de nacimiento -->
+    <div class="flex items-center space-x-4">
+      <strong class="text-lg font-semibold text-gray-800 dark:text-gray-200">Fecha de nacimiento:</strong>
+      <p class="text-gray-700 dark:text-gray-400"><%= player.birthday&.strftime("%d/%m/%Y") %></p>
+    </div>
 
-  <p class="my-5 text-stone-900 dark:text-white">
-    <strong class="block font-medium mb-1">Curp:</strong>
-    <%= player&.curp %>
-  </p>
+    <!-- Foto del jugador -->
+    <% if player.photo.attached? %>
+      <div class="flex items-center space-x-4">
+        <strong class="text-lg font-semibold text-gray-800 dark:text-gray-200">Foto:</strong>
+        <%= image_tag player.photo, class: "max-w-[150px] rounded-lg shadow-md" %>
+      </div>
+    <% else %>
+      <div class="flex items-center space-x-4">
+        <strong class="text-lg font-semibold text-gray-800 dark:text-gray-200">Foto:</strong>
+        <%= image_tag "player-icon.png", class: "max-w-[150px] rounded-lg shadow-md" %>
+      </div>    
+    <% end %>
 
-  <p class="my-5 text-stone-900 dark:text-white">
-    <strong class="block font-medium mb-1">Equipo:</strong>
-    <%= link_to Team.find(player&.team_id).name.to_s, Team.find(player.team_id), class: "hover:underline" %>
-  </p>
+    <!-- CURP -->
+    <div class="flex items-center space-x-4">
+      <strong class="text-lg font-semibold text-gray-800 dark:text-gray-200">Curp:</strong>
+      <p class="text-gray-700 dark:text-gray-400"><%= player&.curp %></p>
+    </div>
 
+    <!-- Equipo -->
+    <div class="flex items-center space-x-4">
+      <strong class="text-lg font-semibold text-gray-800 dark:text-gray-200">Equipo:</strong>
+      <%= link_to Team.find(player&.team_id).name.to_s, Team.find(player.team_id), class: "text-blue-500 hover:underline dark:text-blue-400" %>
+    </div>
+  </div>
 </div>
