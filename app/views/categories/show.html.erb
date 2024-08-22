@@ -21,8 +21,6 @@
     <% else %>
     <p class="text-stone-900 dark:text-white">Esta liga no tiene equipos aún</p>
     <% end %>
-    
-
     <div class="flex gap-4 mt-8">
       <%= link_to "Editar categoría", edit_category_path(@category), class: "bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded" %>
       <%= link_to "Volver a categorías", categories_path, class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded" %>
