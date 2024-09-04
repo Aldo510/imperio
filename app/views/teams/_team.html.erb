@@ -7,7 +7,9 @@
 
   <div class="flex flex-col gap-4 px-4">
     <div class="flex items-center mb-4">
+      <% if @team.logo.attached? %>
       <%= image_tag @team.logo, class: "h-40 w-40 rounded-full object-cover mr-4" %>
+      <% end %>
       <div>
         <p class="text-stone-900 dark:text-white font-medium">Categoría:</p>
         <p class="text-stone-900 dark:text-white hover:underline"><%= link_to Category.find(team.category_id).name, category_path(team.category_id) %></p>
