@@ -1,0 +1,35 @@
+<% content_for :title, "Escuelas" %>
+<div class="w-full max-w-[1440px] mx-auto mt-20">
+    <% if notice.present? %>
+        <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <% end %>
+
+    <div class="flex justify-between items-center">
+        <h1 class="font-bold text-4xl text-stone-900 dark:text-white">Escuelas</h1>
+        <%= link_to 'Nueva Escuela', new_school_path, class: "mb-4 inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    </div>
+
+    <div id="schools" class="min-w-full p-6 bg-gray-100 dark:bg-stone-900 rounded-lg shadow-md">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <% if @schools.any? %>
+            <% @schools.each do |school| %>
+            <div class="bg-white dark:bg-stone-800 shadow-md rounded-lg p-6">
+                <div>
+                <h2 class="text-xl dark:text-gray-100 font-semibold mb-2">
+                    <%= link_to school.name, school, class: "text-blue-600 hover:underline" %>
+                </h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-4"><%= truncate(school.description, length: 100) %></p>                </div>
+                <div class="flex space-x-2">
+                <%= link_to 'Editar', edit_school_path(school), class: "text-blue-600 hover:underline" %>
+                <%= button_to 'Eliminar', school, method: :delete, data: { confirm: '¿Estás seguro?' }, class: "text-red-600 hover:underline" %>
+                </div>
+            </div>
+            <% end %>
+        <% else %>
+        </div>
+        <h2 class="text-xl font-semibold dark:text-gray-100">Aún no se han agregado escuelas</h2>
+        <% end %>
+    </div>
+
+</div>
+

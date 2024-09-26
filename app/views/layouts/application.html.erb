@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Imperio</title>
+    <title>Un lugar para ti</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -13,6 +13,7 @@
   </head>
 
   <body class="bg-red-100 dark:bg-stone-900">
+    <%= render 'shared/navbar'%>
     <main class="container-fluid mx-auto px-5 flex bg-red-100 dark:bg-stone-900">
       <%= yield %>
     </main>

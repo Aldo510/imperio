@@ -1,4 +1,4 @@
-<div id="<%= dom_id player %>" class="shadow-md rounded-lg p-6 mb-8">
+<div id="<%= dom_id player %>" class="shadow-md rounded-lg p- bg-gray-700 p-5">
   <!-- Información del Jugador -->
   <div class="space-y-6">
     <!-- Nombre -->
@@ -22,12 +22,10 @@
     <!-- Foto del jugador -->
     <% if player.photo.attached? %>
       <div class="flex items-center space-x-4">
-        <strong class="text-lg font-semibold text-gray-800 dark:text-gray-200">Foto:</strong>
         <%= image_tag player.photo, class: "max-w-[150px] rounded-lg shadow-md" %>
       </div>
     <% else %>
       <div class="flex items-center space-x-4">
-        <strong class="text-lg font-semibold text-gray-800 dark:text-gray-200">Foto:</strong>
         <%= image_tag "player-icon.png", class: "max-w-[150px] rounded-lg shadow-md" %>
       </div>    
     <% end %>
@@ -35,13 +33,16 @@
     <!-- CURP -->
     <div class="flex items-center space-x-4">
       <strong class="text-lg font-semibold text-gray-800 dark:text-gray-200">Curp:</strong>
-      <p class="text-gray-700 dark:text-gray-400"><%= player&.curp %></p>
+      <p class="text-gray-700 dark:text-gray-400"><%= player&.curp.upcase %></p>
     </div>
 
     <!-- Equipo -->
     <div class="flex items-center space-x-4">
       <strong class="text-lg font-semibold text-gray-800 dark:text-gray-200">Equipo:</strong>
       <%= link_to Team.find(player&.team_id).name.to_s, Team.find(player.team_id), class: "text-blue-500 hover:underline dark:text-blue-400" %>
+    </div>
+    <div class="flex items-center space-x-4">
+      <%= link_to "Show this player", player, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 hover:bg-gray-500 hover:text-gray-200 inline-block font-medium" %>
     </div>
   </div>
 </div>

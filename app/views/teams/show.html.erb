@@ -1,7 +1,8 @@
-<div class="mx-auto md:w-3/5 w-full pt-5">
+<div class="mx-auto md:w-3/5 w-full mt-20 pt-5">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
+
   <%= render @team %>
 
   <div class="flex gap-4 mt-8">

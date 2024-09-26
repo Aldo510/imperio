@@ -32,10 +32,11 @@ class PlayersController < ApplicationController
       # Foto del jugador
       pdf.move_down 10
       if player.photo.attached?
-        pdf.image StringIO.open(player.photo.download), width: 80, height: 60, position: :left
+        image_data = StringIO.open(player.photo.download)
+        pdf.image image_data, fit: [80, 60], position: :center
       else
         player_path = Rails.root.join('app', 'assets', 'images', 'player-icon.png')
-        pdf.image player_path, width: 80, height: 60, position: :left
+        pdf.image player_path, fit: [80, 60], position: :center
       end
     end
 
@@ -64,7 +65,7 @@ class PlayersController < ApplicationController
     pdf.move_down 10
     pdf.text "Fecha de Nacimiento: #{player.birthday.strftime('%d/%m/%Y')}", size: 10
     pdf.move_down 10
-    pdf.text "CURP: #{player.curp}", size: 10
+    pdf.text "CURP: #{player.curp.upcase}", size: 10
 
     # Espacio para la firma
     pdf.move_down 50

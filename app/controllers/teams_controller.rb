@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_team, only: %i[ show edit update destroy ]
 
   # GET /teams or /teams.json
@@ -8,6 +9,7 @@ class TeamsController < ApplicationController
 
   # GET /teams/1 or /teams/1.json
   def show
+    @category = @team.category
   end
 
   # GET /teams/new

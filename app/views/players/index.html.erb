@@ -1,4 +1,4 @@
-<div class="w-full max-w-[1440px] mx-auto mt-10">
+<div class="w-full max-w-[1440px] mx-auto mt-20">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
@@ -7,15 +7,15 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl text-stone-900 dark:text-white">Jugadores</h1>
-    <%= link_to "New player", new_player_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    <%= link_to "Nuevo jugador", new_player_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium hover:bg-blue-900" %>
   </div>
 
-  <div id="players" class="min-w-full">
-    <% @players.each do |player| %>
-      <%= render player %>
-      <p>
-        <%= link_to "Show this player", player, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      </p>
-    <% end %>
+  <div id="players" class="min-w-full p-6 bg-gray-100 dark:bg-stone-900 rounded-lg shadow-md">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <% @players.each do |player| %>
+        <%= render player %>
+      <% end %>
+    </div>
   </div>
+
 </div>

@@ -1,0 +1,21 @@
+<div class="flex flex-col gap-3 pb-3">
+  <% if school.images.attached? %>
+    <div
+      class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+      style="background-image: url(<%= school.images.first.url %>)"
+    ></div>
+  <% else %>
+    <div
+      class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+      style="background-image: url(<%= 'logo.png' %>)"
+    ></div>
+  <% end %>
+  <div>
+    <h2 class="text-stone-900 dark:text-white text-base font-medium leading-normal">
+      <%= link_to school.name, school_path(school), class: "hover:underline text-2xl" %>
+    </h2>
+    <p class="text-[#a14545] text-sm font-normal leading-normal text-xl">
+      <%= truncate(school.description, length: 80) %>
+    </p>
+  </div>
+</div>

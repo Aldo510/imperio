@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :players
   resources :teams
   resources :categories
+  resources :schools
   devise_for :users
   get 'show_pdf', to: 'players#show_pdf', defaults: { format: :pdf }
 
