@@ -1,4 +1,5 @@
 class PlayersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_player, only: %i[ show edit update destroy show_pdf ]
 
   # GET /players or /players.json
