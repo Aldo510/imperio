@@ -5,7 +5,12 @@ class MatchesController < ApplicationController
 
   def update
     @match = Match.find(params[:id])
-    if @match.update(match_params)
+    
+    # Combinar fecha y hora desde el formulario
+    match_date = params[:match][:date]
+    match_time = params[:match][:time]
+    
+    if @match.update(date: "#{match_date} #{match_time}", home_score: params[:match][:home_score], away_score: params[:match][:away_score])
       redirect_to matches_path, notice: 'Partido actualizado con éxito.'
     else
       render :edit
