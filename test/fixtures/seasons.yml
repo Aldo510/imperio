@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  start_date: 2024-10-23
+  end_date: 2024-10-23
+  category: one
+
+two:
+  name: MyString
+  start_date: 2024-10-23
+  end_date: 2024-10-23
+  category: two

@@ -6,6 +6,7 @@
     <h1 class="text-stone-900 dark:text-white text-center text-2xl my-5">Categoría</h1>
     <h1 class="text-stone-900 dark:text-white text-center text-5xl my-3"><%= @category.name %></h1>
     <%= link_to "Agregar Equipo", new_team_path, class: "my-3 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium hover:bg-gray-400" %>
+    <%= button_to 'Generar nueva temporada', generate_season_category_path(@category), class: 'bg-blue-500 hover:bg-blue-700 text-white font-medium py-3 px-5 rounded', method: :post %>
     <% if @teams.present? %>
     <h1 class="text-stone-900 dark:text-white text-xl mb-3">Equipos</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -28,5 +29,50 @@
       <%= link_to "Volver a categorías", categories_path, class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded" %>
       <%= button_to "Borrar esta categoría", @category, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded" %>
     </div>
+    <% if @season %>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <h2 class="text-xl font-semibold text-gray-700 p-6 bg-blue-200">Partidos para la temporada <%= @season.name %></h2>
+
+      <table class="min-w-full bg-white">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Fecha y Hora</th>
+          <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Equipo Local</th>
+          <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Equipo Visitante</th>
+          <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @season.matches.each do |match| %>
+          <tr>
+            <!-- Mostrar la fecha y hora del partido -->
+            <td class="py-2 px-4 border-b border-gray-200 text-sm">
+              <%= match.date.strftime("%d/%m/%Y %H:%M") %>
+            </td>
+
+            <!-- Mostrar el equipo local -->
+            <td class="py-2 px-4 border-b border-gray-200 text-sm">
+              <%= match.home_team.name %>
+            </td>
+
+            <!-- Mostrar el equipo visitante -->
+            <td class="py-2 px-4 border-b border-gray-200 text-sm">
+              <%= match.away_team.name %>
+            </td>
+
+            <!-- Botón de editar -->
+            <td class="py-2 px-4 border-b border-gray-200 text-sm">
+              <%= link_to 'Editar', edit_match_path(match), class: 'bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    </div>
+  <% else %>
+    <p class="text-gray-600 text-center mt-6">Aún no se ha generado ninguna temporada para esta categoría.</p>
+  <% end %>
+
   </div>
 </div>

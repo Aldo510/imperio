@@ -1,0 +1,40 @@
+<div class="container mx-auto">
+  <h1 class="text-3xl font-bold text-center mb-4">Season: <%= @season.name %></h1>
+
+  <div class="leaderboard bg-white rounded shadow-lg p-4">
+    <h2 class="text-xl font-bold mb-2">Leaderboard</h2>
+    <table class="min-w-full">
+      <thead>
+        <tr>
+          <th class="px-4 py-2">Team</th>
+          <th class="px-4 py-2">Played</th>
+          <th class="px-4 py-2">Won</th>
+          <th class="px-4 py-2">Lost</th>
+          <th class="px-4 py-2">Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @leaderboard.each do |entry| %>
+          <tr>
+            <td class="border px-4 py-2"><%= entry[:team].name %></td>
+            <td class="border px-4 py-2"><%= entry[:played] %></td>
+            <td class="border px-4 py-2"><%= entry[:won] %></td>
+            <td class="border px-4 py-2"><%= entry[:lost] %></td>
+            <td class="border px-4 py-2 font-bold"><%= entry[:points] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="matches bg-white rounded shadow-lg p-4 mt-6">
+    <h2 class="text-xl font-bold mb-2">Matches</h2>
+    <ul>
+      <% @matches.each do |match| %>
+        <li>
+          <%= match.home_team.name %> vs <%= match.away_team.name %> - <%= match.date.strftime("%A, %d %b %Y %H:%M") %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

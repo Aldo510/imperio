@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_26_011427) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_24_025508) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_26_011427) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "matches", force: :cascade do |t|
+    t.bigint "home_team_id", null: false
+    t.bigint "away_team_id", null: false
+    t.bigint "season_id", null: false
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["away_team_id"], name: "index_matches_on_away_team_id"
+    t.index ["home_team_id"], name: "index_matches_on_home_team_id"
+    t.index ["season_id"], name: "index_matches_on_season_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "name"
     t.string "last_name"
@@ -68,6 +80,26 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_26_011427) do
     t.decimal "monthly_fee"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "scores", force: :cascade do |t|
+    t.bigint "match_id", null: false
+    t.integer "home_team_score"
+    t.integer "away_team_score"
+    t.boolean "shotout"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_scores_on_match_id"
+  end
+
+  create_table "seasons", force: :cascade do |t|
+    t.string "name"
+    t.date "start_date"
+    t.date "end_date"
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_seasons_on_category_id"
   end
 
   create_table "teams", force: :cascade do |t|
@@ -92,6 +124,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_26_011427) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "matches", "seasons"
+  add_foreign_key "matches", "teams", column: "away_team_id"
+  add_foreign_key "matches", "teams", column: "home_team_id"
   add_foreign_key "players", "teams"
+  add_foreign_key "scores", "matches"
+  add_foreign_key "seasons", "categories"
   add_foreign_key "teams", "categories"
 end

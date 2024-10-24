@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_category, only: %i[ show edit update destroy ]
 
   # GET /categories or /categories.json
@@ -8,6 +9,8 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
+    @teams = @category.teams
+    @season = @category.seasons.last # Mostramos la última temporada si existe
   end
 
   # GET /categories/new
@@ -56,6 +59,16 @@ class CategoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def generate_season
+    @category = Category.find(params[:id])
+    @season = @category.seasons.create(name: "Temporada #{Time.now.year}")
+  
+    # Llamamos al método del modelo para generar los partidos
+    @season.schedule_matches(repeats: 1)
+  
+    redirect_to @category, notice: 'Temporada y partidos generados con éxito.'
+  end  
 
   private
     # Use callbacks to share common setup or constraints between actions.

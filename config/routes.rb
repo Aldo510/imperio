@@ -1,11 +1,18 @@
 Rails.application.routes.draw do
+  get 'matches/edit'
+  get 'seasons/show'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'static_pages#index'
   resources :players
   resources :teams
-  resources :categories
+  resources :categories do
+    member do
+      post :generate_season
+    end
+  end
   resources :schools
   devise_for :users
+  resources :matches, only: [:edit, :update]
   get 'show_pdf', to: 'players#show_pdf', defaults: { format: :pdf }
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
