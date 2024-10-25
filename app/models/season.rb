@@ -11,7 +11,7 @@ class Season < ApplicationRecord
       repeats.times do
         matches.create(home_team: home_team, away_team: away_team, date: random_match_time)
         # Si no quieres que se enfrenten dos veces, elimina la línea siguiente:
-        # matches.create(home_team: away_team, away_team: home_team, date: random_match_time)
+        matches.create(home_team: away_team, away_team: home_team, date: random_match_time)
       end
     end
   end  
