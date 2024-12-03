@@ -30,46 +30,72 @@
       <%= button_to "Borrar esta categoría", @category, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded" %>
     </div>
     <% if @season %>
+    <h2 class='text-white my-5'>Tabla de puntos de la temporada</h2>
+    <table class="min-w-full bg-white mb-5">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border-b-2 border-gray-300">Equipo</th>
+          <th class="py-2 px-4 border-b-2 border-gray-300">Puntos</th>
+          <th class="py-2 px-4 border-b-2 border-gray-300">Victorias</th>
+          <th class="py-2 px-4 border-b-2 border-gray-300">Empates</th>
+          <th class="py-2 px-4 border-b-2 border-gray-300">Derrotas</th>
+          <th class="py-2 px-4 border-b-2 border-gray-300">Shotout Ganado</th>
+          <th class="py-2 px-4 border-b-2 border-gray-300">Shotout Perdido</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @season.team_standings.each do |team| %>
+          <tr>
+            <td class="py-2 px-4 border-b border-gray-300"><%= team.name %></td>
+            <td class="py-2 px-4 border-b border-gray-300"><%= team.points %></td>
+            <td class="py-2 px-4 border-b border-gray-300"><%= team.wins %></td>
+            <td class="py-2 px-4 border-b border-gray-300"><%= team.draws %></td>
+            <td class="py-2 px-4 border-b border-gray-300"><%= team.losses %></td>
+            <td class="py-2 px-4 border-b border-gray-300"><%= team.shotout_wins %></td>
+            <td class="py-2 px-4 border-b border-gray-300"><%= team.shotout_losses %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
       <h2 class="text-xl font-semibold text-gray-700 p-6 bg-blue-200">Partidos para la temporada <%= @season.name %></h2>
 
       <table class="min-w-full bg-white">
-      <thead>
-        <tr>
-          <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Fecha y Hora</th>
-          <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Equipo Local</th>
-          <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Equipo Visitante</th>
-          <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @season.matches.each do |match| %>
+        <thead>
           <tr>
-            <!-- Mostrar la fecha y hora del partido -->
-            <td class="py-2 px-4 border-b border-gray-200 text-sm">
-              <%= match.date.strftime("%d/%m/%Y %H:%M") %>
-            </td>
-
-            <!-- Mostrar el equipo local -->
-            <td class="py-2 px-4 border-b border-gray-200 text-sm">
-              <%= match.home_team.name %>
-            </td>
-
-            <!-- Mostrar el equipo visitante -->
-            <td class="py-2 px-4 border-b border-gray-200 text-sm">
-              <%= match.away_team.name %>
-            </td>
-
-            <!-- Botón de editar -->
-            <td class="py-2 px-4 border-b border-gray-200 text-sm">
-              <%= link_to 'Editar', edit_match_path(match), class: 'bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700' %>
-            </td>
+            <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Fecha y Hora</th>
+            <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Equipo Local</th>
+            <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Equipo Visitante</th>
+            <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Estado</th>
+            <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-600">Acciones</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-
+        </thead>
+        <tbody>
+          <% @season.matches.each do |match| %>
+            <tr>
+              <td class="py-2 px-4 border-b border-gray-200 text-sm">
+                <%= match.date.strftime("%d/%m/%Y %H:%M") %>
+              </td>
+              <td class="py-2 px-4 border-b border-gray-200 text-sm">
+                <%= match.home_team.name %>
+              </td>
+              <td class="py-2 px-4 border-b border-gray-200 text-sm">
+                <%= match.away_team.name %>
+              </td>
+              <td class="py-2 px-4 border-b border-gray-200 text-sm">
+                <%= match.registered ? "Registrado" : "Pendiente" %>
+              </td>
+              <td class="py-2 px-4 border-b border-gray-200 text-sm">
+                <%= link_to 'Editar', edit_match_path(match), class: 'bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
+
   <% else %>
     <p class="text-gray-600 text-center mt-6">Aún no se ha generado ninguna temporada para esta categoría.</p>
   <% end %>

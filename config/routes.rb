@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   get 'seasons/show'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'static_pages#index'
-  resources :players
+  resources :players do
+    collection do
+      get :download_pdf
+    end
+  end
+
   resources :teams
   resources :categories do
     member do

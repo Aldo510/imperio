@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_24_025508) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_03_200621) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_24_025508) do
     t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "shoutout_winner"
+    t.string "shotout"
+    t.string "boolean"
+    t.integer "home_score"
+    t.integer "away_score"
+    t.boolean "registered"
     t.index ["away_team_id"], name: "index_matches_on_away_team_id"
     t.index ["home_team_id"], name: "index_matches_on_home_team_id"
     t.index ["season_id"], name: "index_matches_on_season_id"
@@ -107,6 +113,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_24_025508) do
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "points"
+    t.integer "wins"
+    t.integer "draws"
+    t.integer "losses"
+    t.integer "shotout_wins"
+    t.integer "shotout_losses"
     t.index ["category_id"], name: "index_teams_on_category_id"
   end
 

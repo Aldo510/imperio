@@ -7,6 +7,13 @@ class PlayersController < ApplicationController
     @players = Player.all
   end
 
+  def download_pdf 
+    @players = Player.all 
+    pdf = PlayersPdfGenerator.new(@players).generate 
+    
+    send_data pdf, filename: "players.pdf", type: "application/pdf", disposition: "inline"
+  end
+
   # GET /players/1 or /players/1.json
   def show
   end
