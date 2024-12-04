@@ -35,7 +35,7 @@ class MatchesController < ApplicationController
     respond_to do |format|
       if @match.update(match_params)
         #format.html { redirect_to @match.season, notice: 'Match was successfully updated.' }
-        format.html { redirect_to category_path(@match.season.category), notice: 'Match was successfully updated.' }
+        format.html { redirect_to @match, notice: 'Match was successfully updated.' }
         format.json { render :show, status: :ok, location: @match }
       else
         format.html { render :edit }
