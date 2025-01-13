@@ -1,6 +1,6 @@
 class Season < ApplicationRecord
   belongs_to :category
-  has_many :matches
+  has_many :matches, dependent: :destroy
 
   def schedule_matches(repeats: 1)
     teams = category.teams
