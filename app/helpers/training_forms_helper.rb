@@ -1,0 +1,2 @@
+module TrainingFormsHelper
+end

@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
+  get 'training_forms/new'
+  get 'training_forms/generate_pdf'
   get 'matches/edit'
   get 'seasons/show'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'static_pages#index'
+  get 'training_forms/new', to: 'training_forms#new', as: 'new_training_form'
+  post 'training_forms/generate_pdf', to: 'training_forms#generate_pdf', as: 'generate_pdf'
   resources :players do
     collection do
       get :download_pdf

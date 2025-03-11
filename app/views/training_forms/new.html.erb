@@ -1,0 +1,77 @@
+<div class="bg-red-100 dark:bg-stone-900 min-h-screen p-6">
+  <h1 class="text-2xl font-bold text-center text-red-900 dark:text-red-200 mb-6">Nuevo Formulario de Entrenamiento</h1>
+  <%= form_with url: generate_pdf_path(format: :pdf), method: :post, local: true, data: { turbo: false }, class: "bg-white dark:bg-stone-800 p-6 rounded-lg shadow-md" do |form| %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Primera columna -->
+      <div class="mb-4">
+        <%= form.label :dt, "D.T.", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.text_field :dt, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :pf, "P.F.", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.text_field :pf, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :torneo, "Torneo", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.text_field :torneo, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+
+      <!-- Segunda columna -->
+      <div class="mb-4">
+        <%= form.label :fecha_entrenamiento, "Fecha de Entrenamiento", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.date_field :fecha_entrenamiento, value: Date.today.strftime('%Y-%m-%d'), class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :hrs_inicio, "Hrs. Inicio", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.time_field :hrs_inicio, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :hrs_final, "Hrs. Final", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.time_field :hrs_final, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+
+      <!-- Tercera columna -->
+      <div class="mb-4">
+        <%= form.label :lugar, "Lugar", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.text_field :lugar, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :fecha, "Fecha", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.date_field :fecha, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :num_jugadores, "# Jug.", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.number_field :num_jugadores, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+
+      <!-- Cuarta columna -->
+      <div class="mb-4">
+        <%= form.label :periodo, "Período", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.text_field :periodo, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :microciclo, "Microciclo", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.text_field :microciclo, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :sesion, "T/N de Sesión", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.text_field :sesion, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+
+      <!-- Quinta columna -->
+      <div class="mb-4">
+        <%= form.label :turno, "Turno", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.text_field :turno, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :categoria, "Categoría", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+        <%= form.text_field :categoria, class: "mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 dark:bg-stone-700 dark:text-gray-200" %>
+      </div>
+    </div>
+
+    <!-- Botón de envío -->
+    <div class="text-center mt-6">
+      <%= form.submit "Generar PDF", class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:bg-red-700 dark:hover:bg-red-800" %>
+    </div>
+  <% end %>
+</div>
