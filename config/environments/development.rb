@@ -45,7 +45,13 @@ Rails.application.configure do
 
   # host
 
-   config.hosts << "imperio-production.up.railway.app"
+  config.hosts << "imperio-production.up.railway.app"
+  # Permitir host de Fly
+  config.hosts << "imperio.fly.dev"
+  config.hosts << /.*\.fly\.dev/
+
+  # (Opcional) hostname interno en Fly
+  config.hosts << "imperio.internal"
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

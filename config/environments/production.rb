@@ -85,6 +85,12 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
 
   config.hosts << "imperio-production.up.railway.app"
+  # Permitir host de Fly
+  config.hosts << "imperio.fly.dev"
+  config.hosts << /.*\.fly\.dev/
+
+  # (Opcional) hostname interno en Fly
+  config.hosts << "imperio.internal"
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
