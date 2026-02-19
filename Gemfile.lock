@@ -122,6 +122,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dockerfile-rails (1.7.10)
+      rails (>= 3.0.0)
     dotenv (3.1.2)
     dotenv-rails (3.1.2)
       dotenv (= 3.1.2)
@@ -303,6 +305,7 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9)
+  dockerfile-rails (>= 1.7)
   dotenv-rails
   importmap-rails
   jbuilder
@@ -324,4 +327,4 @@ RUBY VERSION
    ruby 3.1.2p20
 
 BUNDLED WITH
-   2.4.12
+   2.3.7
