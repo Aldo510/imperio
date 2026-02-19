@@ -1,0 +1,43 @@
+<div class="mx-auto md:w-2/3 w-full mt-10">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-600 font-medium rounded-lg inline-block"><%= notice %></p>
+  <% end %>
+
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold text-stone-900 dark:text-white">Cartillas de <%= @school.name %></h1>
+    <%= link_to "Nueva cartilla", new_school_athlete_card_path(@school), class: "rounded-lg py-2 px-4 bg-blue-600 text-white hover:bg-blue-700" %>
+  </div>
+
+  <% if @athlete_cards.any? %>
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <table class="min-w-full">
+        <thead>
+          <tr class="bg-gray-100 text-left">
+            <th class="py-3 px-4">Alumno</th>
+            <th class="py-3 px-4">Edad</th>
+            <th class="py-3 px-4">Nivel</th>
+            <th class="py-3 px-4">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @athlete_cards.each do |athlete_card| %>
+            <tr class="border-t">
+              <td class="py-3 px-4"><%= athlete_card.name %></td>
+              <td class="py-3 px-4"><%= athlete_card.age %></td>
+              <td class="py-3 px-4"><%= skill_level_label(athlete_card.skill_level) %></td>
+              <td class="py-3 px-4">
+                <%= link_to "Ver", school_athlete_card_path(@school, athlete_card), class: "text-blue-600 hover:text-blue-800" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-gray-600">Aún no hay cartillas registradas para esta escuela.</p>
+  <% end %>
+
+  <div class="mt-6">
+    <%= link_to "Volver a la escuela", school_path(@school), class: "rounded-lg py-2 px-4 bg-gray-200 text-gray-900 hover:bg-gray-300" %>
+  </div>
+</div>

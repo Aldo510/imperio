@@ -1,0 +1,152 @@
+<%= form_with model: [school, athlete_card], local: true, class: "contents" do |form| %>
+  <% if athlete_card.errors.any? %>
+    <div class="mb-4 bg-red-100 border border-red-400 text-red-700 p-4 rounded">
+      <h2 class="font-bold mb-2">No se pudo guardar la cartilla:</h2>
+      <ul>
+        <% athlete_card.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <%= form.label :name, "Nombre", class: "text-stone-900 dark:text-white" %>
+      <%= form.text_field :name, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full", required: true %>
+    </div>
+
+    <div>
+      <%= form.label :birth_date, "Fecha de nacimiento", class: "text-stone-900 dark:text-white" %>
+      <%= form.date_field :birth_date, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full", required: true %>
+    </div>
+
+    <div>
+      <%= form.label :curp, "CURP", class: "text-stone-900 dark:text-white" %>
+      <%= form.text_field :curp, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full", required: true %>
+    </div>
+
+    <div>
+      <%= form.label :guardian_name, "Padre o tutor", class: "text-stone-900 dark:text-white" %>
+      <%= form.text_field :guardian_name, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full", required: true %>
+    </div>
+
+    <div>
+      <%= form.label :phone_number, "Número de teléfono", class: "text-stone-900 dark:text-white" %>
+      <%= form.telephone_field :phone_number, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full", required: true %>
+    </div>
+
+    <div>
+      <%= form.label :size, "Talla", class: "text-stone-900 dark:text-white" %>
+      <%= form.text_field :size, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full", required: true %>
+    </div>
+
+    <div>
+      <%= form.label :weight_kg, "Peso (kg)", class: "text-stone-900 dark:text-white" %>
+      <%= form.number_field :weight_kg, step: 0.1, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div>
+      <%= form.label :height_cm, "Estatura (cm)", class: "text-stone-900 dark:text-white" %>
+      <%= form.number_field :height_cm, step: 0.1, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div>
+      <%= form.label :dominant_profile, "Perfil dominante", class: "text-stone-900 dark:text-white" %>
+      <%= form.select :dominant_profile, [["Derecho", "right"], ["Izquierdo", "left"]], {}, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div>
+      <%= form.label :skill_level, "Nivel de pericia", class: "text-stone-900 dark:text-white" %>
+      <%= form.select :skill_level,
+          [["A - Novato consciente", "novice_conscious"], ["B - Principiante consciente", "beginner_conscious"], ["C - Competitivo consciente", "competitive_conscious"]],
+          {},
+          class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div class="md:col-span-2">
+      <%= form.label :photo, "Foto", class: "text-stone-900 dark:text-white" %>
+      <%= form.file_field :photo, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+  </div>
+
+  <div class="mt-8">
+    <h2 class="text-xl font-semibold mb-4 text-stone-900 dark:text-white">Días y horarios de entrenamiento</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Solo se guardan los días que tengan hora de inicio y fin. Si un día no entrena, deja ambos campos vacíos.</p>
+
+    <%= form.fields_for :training_schedules, athlete_card.training_schedules.sort_by { |schedule| TrainingSchedule.day_of_weeks[schedule.day_of_week] || 9 } do |schedule_fields| %>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3 p-3 bg-white dark:bg-stone-800 border border-gray-200 dark:border-stone-700 rounded">
+        <div>
+          <label class="text-stone-900 dark:text-white"><%= training_day_label(schedule_fields.object.day_of_week) %></label>
+          <%= schedule_fields.hidden_field :day_of_week %>
+        </div>
+
+        <div>
+          <%= schedule_fields.label :start_time, "Inicio", class: "text-stone-900 dark:text-white" %>
+          <%= schedule_fields.time_field :start_time, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+
+        <div>
+          <%= schedule_fields.label :end_time, "Fin", class: "text-stone-900 dark:text-white" %>
+          <%= schedule_fields.time_field :end_time, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-8">
+    <h2 class="text-xl font-semibold mb-4 text-stone-900 dark:text-white">Ruta de resultados</h2>
+
+    <%= form.fields_for :result_paths, athlete_card.result_paths.sort_by { |result| ResultPath.terms[result.term] || 9 } do |result_fields| %>
+      <div class="mb-4 p-3 bg-white dark:bg-stone-800 border border-gray-200 dark:border-stone-700 rounded">
+        <%= result_fields.hidden_field :term %>
+        <h3 class="font-semibold text-stone-900 dark:text-white mb-2"><%= result_term_label(result_fields.object.term) %></h3>
+
+        <div class="mb-3">
+          <%= result_fields.label :goal, "Objetivo", class: "text-stone-900 dark:text-white" %>
+          <%= result_fields.text_area :goal, rows: 2, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+
+        <div>
+          <%= result_fields.label :notes, "Observaciones", class: "text-stone-900 dark:text-white" %>
+          <%= result_fields.text_area :notes, rows: 2, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-8">
+    <h2 class="text-xl font-semibold mb-4 text-stone-900 dark:text-white">Lesión (opcional)</h2>
+
+    <%= form.fields_for :injury_reports do |injury_fields| %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 p-3 bg-white dark:bg-stone-800 border border-gray-200 dark:border-stone-700 rounded">
+        <div>
+          <%= injury_fields.label :injury_name, "Lesión", class: "text-stone-900 dark:text-white" %>
+          <%= injury_fields.text_field :injury_name, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+
+        <div>
+          <%= injury_fields.label :reported_on, "Fecha de reporte", class: "text-stone-900 dark:text-white" %>
+          <%= injury_fields.date_field :reported_on, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+
+        <div class="md:col-span-2">
+          <%= injury_fields.label :observations, "Observaciones", class: "text-stone-900 dark:text-white" %>
+          <%= injury_fields.text_area :observations, rows: 3, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+
+        <% if injury_fields.object.persisted? %>
+          <div class="md:col-span-2 flex items-center gap-2">
+            <%= injury_fields.check_box :_destroy %>
+            <%= injury_fields.label :_destroy, "Eliminar lesión", class: "text-stone-900 dark:text-white" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-6 flex gap-3">
+    <%= form.submit athlete_card.persisted? ? "Actualizar cartilla" : "Crear cartilla", class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <%= link_to "Cancelar", school_athlete_cards_path(school), class: "px-4 py-2 bg-gray-200 text-gray-900 rounded hover:bg-gray-300" %>
+  </div>
+<% end %>

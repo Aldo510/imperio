@@ -23,6 +23,7 @@
           <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Contactanos</a>
           <% if user_signed_in? %>
             <%= link_to 'Editar', edit_school_path(@school), class: "hover:bg-gray-600  px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+            <%= link_to 'Cartillas deportivas', school_athlete_cards_path(@school), class: "px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700" %>
           <% end %>
         </div>
         <div class='mt-10 flex items-center justify-center'>

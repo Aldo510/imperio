@@ -1,0 +1,53 @@
+<%= form_with model: [@school, @athlete_card, @technical_development], local: true, class: "contents" do |form| %>
+  <% if @technical_development.errors.any? %>
+    <div class="mb-4 bg-red-100 border border-red-400 text-red-700 p-4 rounded">
+      <h2 class="font-bold mb-2">No se pudo guardar la evaluación:</h2>
+      <ul>
+        <% @technical_development.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div>
+      <%= form.label :evaluated_on, "Fecha de evaluación", class: "text-stone-900 dark:text-stone-100" %>
+      <%= form.date_field :evaluated_on, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full", required: true %>
+    </div>
+
+    <div>
+      <%= form.label :team_id, "Equipo", class: "text-stone-900 dark:text-stone-100" %>
+      <%= form.collection_select :team_id, @teams, :id, :name, { prompt: "Selecciona un equipo" }, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full", required: true %>
+    </div>
+
+    <div>
+      <%= form.label :category_id, "Categoría", class: "text-stone-900 dark:text-stone-100" %>
+      <%= form.collection_select :category_id, @categories, :id, :name, { prompt: "Selecciona una categoría" }, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full", required: true %>
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold mb-3 text-stone-900 dark:text-stone-100">Evaluación por habilidad</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Califica cada campo como Bien, Regular o Insuficiente.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <% TechnicalDevelopment::SKILL_FIELDS.each do |skill| %>
+        <div class="p-3 rounded border border-gray-200 dark:border-stone-700 bg-white dark:bg-stone-800">
+          <%= form.label skill, skill_label(skill), class: "text-stone-900 dark:text-stone-100" %>
+          <%= form.select skill, rating_options, {}, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <%= form.label :notes, "Observaciones", class: "text-stone-900 dark:text-stone-100" %>
+    <%= form.text_area :notes, rows: 3, class: "block shadow rounded-md border border-gray-400 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="flex gap-3">
+    <%= form.submit @technical_development.persisted? ? "Actualizar evaluación" : "Guardar evaluación", class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <%= link_to "Cancelar", school_athlete_card_technical_developments_path(@school, @athlete_card), class: "px-4 py-2 bg-gray-200 dark:bg-stone-700 text-gray-900 dark:text-stone-100 rounded hover:bg-gray-300 dark:hover:bg-stone-600" %>
+  </div>
+<% end %>

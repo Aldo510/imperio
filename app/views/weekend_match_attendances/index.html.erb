@@ -1,0 +1,46 @@
+<div class="mx-auto md:w-2/3 w-full mt-10">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-600 font-medium rounded-lg inline-block"><%= notice %></p>
+  <% end %>
+
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold text-stone-900 dark:text-white">Asistencia a partidos</h1>
+    <%= link_to "Registrar asistencia", new_school_athlete_card_weekend_match_attendance_path(@school, @athlete_card), class: "rounded-lg py-2 px-4 bg-blue-600 text-white hover:bg-blue-700" %>
+  </div>
+
+  <% if @weekend_match_attendances.any? %>
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <table class="min-w-full">
+        <thead>
+          <tr class="bg-gray-100 text-left">
+            <th class="py-3 px-4">Fecha</th>
+            <th class="py-3 px-4">Día</th>
+            <th class="py-3 px-4">Asistencia</th>
+            <th class="py-3 px-4">Rival</th>
+            <th class="py-3 px-4">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @weekend_match_attendances.each do |attendance| %>
+            <tr class="border-t">
+              <td class="py-3 px-4"><%= attendance.match_date.strftime("%d/%m/%Y") %></td>
+              <td class="py-3 px-4"><%= weekend_day_label(attendance.weekend_day) %></td>
+              <td class="py-3 px-4"><%= attendance.attended ? "Asistió" : "No asistió" %></td>
+              <td class="py-3 px-4"><%= attendance.opponent.presence || "-" %></td>
+              <td class="py-3 px-4 flex gap-2">
+                <%= link_to "Editar", edit_school_athlete_card_weekend_match_attendance_path(@school, @athlete_card, attendance), class: "text-blue-600 hover:text-blue-800" %>
+                <%= button_to "Eliminar", school_athlete_card_weekend_match_attendance_path(@school, @athlete_card, attendance), method: :delete, class: "text-red-600 hover:text-red-800 bg-transparent p-0" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No hay asistencias a partidos registradas todavía.</p>
+  <% end %>
+
+  <div class="mt-6">
+    <%= link_to "Volver a cartilla", school_athlete_card_path(@school, @athlete_card), class: "rounded-lg py-2 px-4 bg-gray-200 text-gray-900 hover:bg-gray-300" %>
+  </div>
+</div>

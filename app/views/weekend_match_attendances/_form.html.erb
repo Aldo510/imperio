@@ -1,0 +1,42 @@
+<%= form_with model: [@school, @athlete_card, @weekend_match_attendance], local: true, class: "contents" do |form| %>
+  <% if @weekend_match_attendance.errors.any? %>
+    <div class="mb-4 bg-red-100 border border-red-400 text-red-700 p-4 rounded">
+      <h2 class="font-bold mb-2">No se pudo guardar la asistencia:</h2>
+      <ul>
+        <% @weekend_match_attendance.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :match_date, "Fecha del partido", class: "text-stone-900 dark:text-white" %>
+    <%= form.date_field :match_date, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", required: true %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :weekend_day, "Día del partido", class: "text-stone-900 dark:text-white" %>
+    <%= form.select :weekend_day, [["Sábado", "saturday"], ["Domingo", "sunday"]], {}, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="mb-4 flex items-center gap-2">
+    <%= form.check_box :attended %>
+    <%= form.label :attended, "Asistió", class: "text-stone-900 dark:text-white" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :opponent, "Rival", class: "text-stone-900 dark:text-white" %>
+    <%= form.text_field :opponent, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :notes, "Observaciones", class: "text-stone-900 dark:text-white" %>
+    <%= form.text_area :notes, rows: 3, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="flex gap-3">
+    <%= form.submit @weekend_match_attendance.persisted? ? "Actualizar asistencia" : "Registrar asistencia", class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <%= link_to "Cancelar", school_athlete_card_weekend_match_attendances_path(@school, @athlete_card), class: "px-4 py-2 bg-gray-200 text-gray-900 rounded hover:bg-gray-300" %>
+  </div>
+<% end %>

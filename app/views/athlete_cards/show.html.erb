@@ -1,0 +1,181 @@
+<div class="mx-auto md:w-3/4 w-full mt-10">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-600 font-medium rounded-lg inline-block"><%= notice %></p>
+  <% end %>
+
+  <div class="flex justify-between items-start mb-6">
+    <div>
+      <h1 class="text-3xl font-bold text-stone-900 dark:text-white"><%= @athlete_card.name %></h1>
+      <p class="text-gray-600 dark:text-gray-200">Escuela: <%= @school.name %></p>
+    </div>
+    <div class="flex gap-2">
+      <%= link_to "Editar", edit_school_athlete_card_path(@school, @athlete_card), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+      <%= button_to "Eliminar", school_athlete_card_path(@school, @athlete_card), method: :delete, form: { data: { turbo_confirm: "¿Seguro que deseas eliminar esta cartilla?" } }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
+    </div>
+  </div>
+
+  <div class="bg-white dark:bg-stone-800 border border-gray-200 dark:border-stone-700 shadow rounded-lg p-6 mb-6">
+    <h2 class="text-xl font-semibold mb-4 text-stone-900 dark:text-stone-100">Datos generales</h2>
+
+    <% if @athlete_card.photo.attached? %>
+      <div class="mb-4">
+        <%= image_tag @athlete_card.photo, class: "rounded-lg w-40 h-40 object-cover" %>
+      </div>
+    <% end %>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-stone-900 dark:text-stone-100">
+      <p><strong>Fecha de nacimiento:</strong> <%= @athlete_card.birth_date.strftime("%d/%m/%Y") %></p>
+      <p><strong>Edad:</strong> <%= @athlete_card.age %></p>
+      <p><strong>CURP:</strong> <%= @athlete_card.curp %></p>
+      <p><strong>Padre o tutor:</strong> <%= @athlete_card.guardian_name %></p>
+      <p><strong>Número de teléfono:</strong> <%= @athlete_card.phone_number %></p>
+      <p><strong>Talla:</strong> <%= @athlete_card.size %></p>
+      <p><strong>Peso:</strong> <%= @athlete_card.weight_kg.present? ? "#{@athlete_card.weight_kg} kg" : "-" %></p>
+      <p><strong>Estatura:</strong> <%= @athlete_card.height_cm.present? ? "#{@athlete_card.height_cm} cm" : "-" %></p>
+      <p><strong>Perfil dominante:</strong> <%= dominant_profile_label(@athlete_card.dominant_profile) %></p>
+      <p><strong>Nivel de pericia:</strong> <%= skill_level_label(@athlete_card.skill_level) %></p>
+    </div>
+  </div>
+
+  <% latest_technical = @athlete_card.technical_developments.order(evaluated_on: :desc, created_at: :desc).first %>
+  <div class="bg-white dark:bg-stone-800 border border-gray-200 dark:border-stone-700 shadow rounded-lg p-6 mb-6">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h2 class="text-xl font-semibold text-stone-900 dark:text-stone-100">Desarrollo técnico</h2>
+        <% if latest_technical.present? %>
+          <p class="text-stone-900 dark:text-stone-100 mt-1">
+            Última evaluación: <strong><%= latest_technical.evaluated_on.strftime("%d/%m/%Y") %></strong> |
+            Promedio: <strong><%= number_with_precision(latest_technical.overall_score, precision: 2) %></strong>
+          </p>
+        <% else %>
+          <p class="text-stone-900 dark:text-stone-100 mt-1">Aún no hay evaluaciones técnicas registradas.</p>
+        <% end %>
+      </div>
+      <div class="flex gap-2">
+        <%= link_to "Ver historial", school_athlete_card_technical_developments_path(@school, @athlete_card), class: "px-3 py-2 bg-gray-200 dark:bg-stone-700 text-gray-900 dark:text-stone-100 rounded hover:bg-gray-300 dark:hover:bg-stone-600" %>
+        <%= link_to "Nueva evaluación", new_school_athlete_card_technical_development_path(@school, @athlete_card), class: "px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+      </div>
+    </div>
+  </div>
+
+  <% latest_tactical = @athlete_card.tactical_developments.order(evaluated_on: :desc, created_at: :desc).first %>
+  <div class="bg-white dark:bg-stone-800 border border-gray-200 dark:border-stone-700 shadow rounded-lg p-6 mb-6">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h2 class="text-xl font-semibold text-stone-900 dark:text-stone-100">Desarrollo táctico</h2>
+        <% if latest_tactical.present? %>
+          <p class="text-stone-900 dark:text-stone-100 mt-1">
+            Última evaluación: <strong><%= latest_tactical.evaluated_on.strftime("%d/%m/%Y") %></strong> |
+            Promedio: <strong><%= number_with_precision(latest_tactical.overall_score, precision: 2) %></strong>
+          </p>
+        <% else %>
+          <p class="text-stone-900 dark:text-stone-100 mt-1">Aún no hay evaluaciones tácticas registradas.</p>
+        <% end %>
+      </div>
+      <div class="flex gap-2">
+        <%= link_to "Ver historial", school_athlete_card_tactical_developments_path(@school, @athlete_card), class: "px-3 py-2 bg-gray-200 dark:bg-stone-700 text-gray-900 dark:text-stone-100 rounded hover:bg-gray-300 dark:hover:bg-stone-600" %>
+        <%= link_to "Nueva evaluación", new_school_athlete_card_tactical_development_path(@school, @athlete_card), class: "px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white dark:bg-stone-800 border border-gray-200 dark:border-stone-700 shadow rounded-lg p-6 mb-6">
+    <h2 class="text-xl font-semibold mb-4 text-stone-900 dark:text-stone-100">Días de entrenamiento</h2>
+    <% if @athlete_card.training_schedules.any? %>
+      <table class="min-w-full">
+        <thead>
+          <tr class="bg-gray-100 dark:bg-stone-700 text-left text-stone-900 dark:text-stone-100">
+            <th class="py-2 px-3">Día</th>
+            <th class="py-2 px-3">Horario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @athlete_card.training_schedules.order(:day_of_week).each do |schedule| %>
+            <tr class="border-t border-gray-200 dark:border-stone-700 text-stone-900 dark:text-stone-100">
+              <td class="py-2 px-3"><%= training_day_label(schedule.day_of_week) %></td>
+              <td class="py-2 px-3"><%= schedule.start_time.strftime("%H:%M") %> - <%= schedule.end_time.strftime("%H:%M") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="text-stone-900 dark:text-stone-100">No hay horarios cargados.</p>
+    <% end %>
+  </div>
+
+  <div class="bg-white dark:bg-stone-800 border border-gray-200 dark:border-stone-700 shadow rounded-lg p-6 mb-6">
+    <h2 class="text-xl font-semibold mb-4 text-stone-900 dark:text-stone-100">Ruta de resultados</h2>
+    <% if @athlete_card.result_paths.any? %>
+      <% @athlete_card.result_paths.order(:term).each do |result| %>
+        <div class="mb-4 p-3 bg-gray-50 dark:bg-stone-700 rounded text-stone-900 dark:text-stone-100">
+          <h3 class="font-semibold"><%= result_term_label(result.term) %></h3>
+          <p><strong>Objetivo:</strong> <%= result.goal %></p>
+          <p><strong>Observaciones:</strong> <%= result.notes.presence || "-" %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-stone-900 dark:text-stone-100">No hay ruta de resultados registrada.</p>
+    <% end %>
+  </div>
+
+  <div class="bg-white dark:bg-stone-800 border border-gray-200 dark:border-stone-700 shadow rounded-lg p-6 mb-6">
+    <h2 class="text-xl font-semibold mb-4 text-stone-900 dark:text-stone-100">Lesiones</h2>
+    <% if @athlete_card.injury_reports.any? %>
+      <% @athlete_card.injury_reports.each do |injury| %>
+        <div class="mb-4 p-3 bg-gray-50 dark:bg-stone-700 rounded text-stone-900 dark:text-stone-100">
+          <p><strong>Lesión:</strong> <%= injury.injury_name %></p>
+          <p><strong>Fecha:</strong> <%= injury.reported_on&.strftime("%d/%m/%Y") || "-" %></p>
+          <p><strong>Observaciones:</strong> <%= injury.observations.presence || "-" %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-stone-900 dark:text-stone-100">No hay lesiones registradas.</p>
+    <% end %>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div class="bg-white dark:bg-stone-800 border border-gray-200 dark:border-stone-700 shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4 text-stone-900 dark:text-stone-100">Asistencia a entrenamientos</h2>
+      <div class="flex gap-2 mb-4">
+        <%= link_to "Registrar asistencia", new_school_athlete_card_training_attendance_path(@school, @athlete_card), class: "px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+        <%= link_to "Ver historial", school_athlete_card_training_attendances_path(@school, @athlete_card), class: "px-3 py-2 bg-gray-200 dark:bg-stone-700 text-gray-900 dark:text-stone-100 rounded hover:bg-gray-300 dark:hover:bg-stone-600" %>
+      </div>
+
+      <% if @training_attendances.any? %>
+        <ul class="space-y-2 text-stone-900 dark:text-stone-100">
+          <% @training_attendances.each do |attendance| %>
+            <li class="text-sm">
+              <strong><%= attendance.attended_on.strftime("%d/%m/%Y") %>:</strong>
+              <%= attendance.attended ? "Asistió" : "No asistió" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-stone-900 dark:text-stone-100">No hay asistencias registradas.</p>
+      <% end %>
+    </div>
+
+    <div class="bg-white dark:bg-stone-800 border border-gray-200 dark:border-stone-700 shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4 text-stone-900 dark:text-stone-100">Asistencia a partidos (fin de semana)</h2>
+      <div class="flex gap-2 mb-4">
+        <%= link_to "Registrar asistencia", new_school_athlete_card_weekend_match_attendance_path(@school, @athlete_card), class: "px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+        <%= link_to "Ver historial", school_athlete_card_weekend_match_attendances_path(@school, @athlete_card), class: "px-3 py-2 bg-gray-200 dark:bg-stone-700 text-gray-900 dark:text-stone-100 rounded hover:bg-gray-300 dark:hover:bg-stone-600" %>
+      </div>
+
+      <% if @weekend_match_attendances.any? %>
+        <ul class="space-y-2 text-stone-900 dark:text-stone-100">
+          <% @weekend_match_attendances.each do |attendance| %>
+            <li class="text-sm">
+              <strong><%= attendance.match_date.strftime("%d/%m/%Y") %>:</strong>
+              <%= weekend_day_label(attendance.weekend_day) %> - <%= attendance.attended ? "Asistió" : "No asistió" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-stone-900 dark:text-stone-100">No hay asistencias a partidos registradas.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <%= link_to "Volver a cartillas", school_athlete_cards_path(@school), class: "px-4 py-2 bg-gray-200 dark:bg-stone-700 text-gray-900 dark:text-stone-100 rounded hover:bg-gray-300 dark:hover:bg-stone-600" %>
+</div>

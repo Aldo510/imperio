@@ -19,7 +19,14 @@ Rails.application.routes.draw do
       post :generate_season
     end
   end
-  resources :schools
+  resources :schools do
+    resources :athlete_cards do
+      resources :technical_developments, except: [:show]
+      resources :tactical_developments, except: [:show]
+      resources :training_attendances, except: [:show]
+      resources :weekend_match_attendances, except: [:show]
+    end
+  end
   devise_for :users
   resources :matches, only: [:edit, :update]
   get 'show_pdf', to: 'players#show_pdf', defaults: { format: :pdf }
