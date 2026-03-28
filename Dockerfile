@@ -57,6 +57,6 @@ USER rails:rails
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Start the server by default, this can be overwritten at runtime
+# Start Puma directly so the container always honors config/puma.rb in production.
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
