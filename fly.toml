@@ -3,7 +3,7 @@ app = "imperio"
 [http_service]
   internal_port = 3000
   force_https = true
-  auto_stop_machines = true
-  auto_start_machines = true
-  min_machines_running = 0
+  auto_stop_machines = true  # Esto apaga la app si no hay trafico
+  auto_start_machines = true # La prende cuando alguien entra
+  min_machines_running = 0   # Importante: que llegue a cero
   processes = ["app"]

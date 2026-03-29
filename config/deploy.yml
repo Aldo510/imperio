@@ -1,0 +1,49 @@
+service: imperio
+image: registry.digitalocean.com/imperio
+secrets_path: .kamal/secrets
+
+servers:
+  web:
+    - 138.197.117.170
+
+ssh:
+  user: root
+
+proxy:
+  app_port: 3000
+  healthcheck:
+    path: /up
+    interval: 3
+    timeout: 10
+  response_timeout: 30
+  # When your domain already points to the droplet, uncomment these:
+  # host: app.example.com
+  # ssl: true
+  # forward_headers: true
+
+registry:
+  server: registry.digitalocean.com
+  username:
+    - KAMAL_REGISTRY_USERNAME
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+
+env:
+  clear:
+    RAILS_ENV: production
+    PORT: 3000
+    RAILS_LOG_LEVEL: info
+    RAILS_MAX_THREADS: 5
+    FORCE_SSL: "false"
+    APP_HOSTS: "138.197.117.170"
+  secret:
+    - DATABASE_URL
+    - S3_ACCESS_KEY
+    - S3_SECRET_KEY
+    - S3_REGION
+    - S3_BUCKET
+
+asset_path: /rails/public/assets

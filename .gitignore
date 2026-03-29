@@ -80,3 +80,5 @@ yarn-debug.log*
 # Ignore Apple files
 .DS_Store
 
+# Kamal local secrets
+.kamal/secrets*

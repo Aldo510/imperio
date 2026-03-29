@@ -79,6 +79,4 @@ test:
 #
 production:
   <<: *default
-  database: imperio_production
-  username: imperio
-  password: <%= ENV["IMPERIO_DATABASE_PASSWORD"] %>
+  url: <%= ENV.fetch("DATABASE_URL") %>

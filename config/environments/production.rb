@@ -45,11 +45,10 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
-  # config.assume_ssl = true
+  config.assume_ssl = true
 
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # Kamal/DO can start on plain HTTP first and enable TLS later at the proxy.
+  config.force_ssl = ActiveModel::Type::Boolean.new.cast(ENV.fetch("FORCE_SSL", "false"))
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
@@ -84,13 +83,12 @@ Rails.application.configure do
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
-  config.hosts << "imperio-production.up.railway.app"
-  # Permitir host de Fly
-  config.hosts << "imperio.fly.dev"
-  config.hosts << /.*\.fly\.dev/
-
-  # (Opcional) hostname interno en Fly
-  config.hosts << "imperio.internal"
+  configured_hosts = ENV.fetch("APP_HOSTS", "").split(",").map(&:strip).reject(&:empty?)
+  if configured_hosts.any?
+    configured_hosts.each { |host| config.hosts << host }
+  else
+    config.hosts.clear
+  end
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
