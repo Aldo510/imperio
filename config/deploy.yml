@@ -10,11 +10,13 @@ ssh:
   user: root
 
 proxy:
-  ssl: true
-  # When your domain already points to the droplet, uncomment these:
-  # host: app.example.com
-  # ssl: true
-  # forward_headers: true
+  app_port: 3000
+  ssl: false
+  healthcheck:
+    path: /up
+    interval: 3
+    timeout: 10
+  response_timeout: 30
 
 registry:
   username: aldoax2
