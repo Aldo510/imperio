@@ -8,7 +8,6 @@ Files added for deployment:
 
 - `config/deploy.yml`
 - `.kamal/secrets`
-- `.kamal/secrets-common`
 
 Before the first deploy:
 

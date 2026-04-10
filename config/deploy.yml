@@ -35,10 +35,12 @@ env:
     FORCE_SSL: "false"
     RAILS_ASSUME_SSL: "false"
   secret:
+    - SECRET_KEY_BASE
     - DATABASE_URL
     - S3_ACCESS_KEY
     - S3_SECRET_KEY
     - S3_REGION
     - S3_BUCKET
+
 
 asset_path: /rails/public/assets

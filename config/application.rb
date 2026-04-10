@@ -10,7 +10,8 @@ module Imperio
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
-    config.secret_key_base = '<%= ENV["SECRET_KEY_BASE"] %>'
+    config.credentials.content_path = Rails.root.join("config/credentials/disabled.yml.enc")
+    config.credentials.key_path = Rails.root.join("config/credentials/disabled.key")
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
